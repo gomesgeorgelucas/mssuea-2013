@@ -12,9 +12,29 @@ import java.util.ArrayList;
 public class Fila {
 	
 	private boolean filaVazia;
-	private boolean tempoNaFila;
+	private int tempoNaFila;
+	private int tamFila;
+	private int maxTamFila;
 	
 	private ArrayList<Carro> myList = new ArrayList<Carro>();
+
+	
+	
+	public int getTamFila() {
+		return tamFila;
+	}
+
+	public void setTamFila(int tamFila) {
+		this.tamFila = tamFila;
+	}
+
+	public int getMaxTamFila() {
+		return maxTamFila;
+	}
+
+	public void setMaxTamFila(int maxTamFila) {
+		this.maxTamFila = maxTamFila;
+	}
 
 	public boolean isFilaVazia() {
 		return filaVazia;
@@ -32,16 +52,19 @@ public class Fila {
 		this.myList = myList;
 	}
 	
-	public boolean isTempoNaFila() {
+	public int getTempoNaFila() {
 		return tempoNaFila;
 	}
 
-	public void setTempoNaFila(boolean tempoNaFila) {
+	public void setTempoNaFila(int tempoNaFila) {
 		this.tempoNaFila = tempoNaFila;
 	}
 	
 	public void adicionaNaFila(Carro carro) {
 		this.getMyList().add(carro);
+		if (this.getMyList().size() < this.getMaxTamFila())
+			this.setTamFila(this.getTamFila()+1);
+		
 	}
 	
 	public void removeDaFila(Carro carro) {
@@ -56,6 +79,10 @@ public class Fila {
 		this.setFilaVazia(filaVazia);
 	}
 	
+	public Fila(boolean filaVazia, int maxTam) {
+		this.setFilaVazia(filaVazia);
+		this.setMaxTamFila(maxTam);
+	}
 	
 	
 }

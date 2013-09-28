@@ -19,9 +19,18 @@ public class Posto {
 	private int carrosLavados;
 	private int carrosNaoLavados;
 	
-	ArrayList<LavaJato> meusLavaJatos = new ArrayList<LavaJato>();
+	private Fila areaDeEspera = new Fila(true);
+	private ArrayList<LavaJato> meusLavaJatos = new ArrayList<LavaJato>();
+
+	public Fila getAreaDeEspera() {
+		return areaDeEspera;
+	}
 
 
+	public void setAreaDeEspera(Fila areaDeEspera) {
+		this.areaDeEspera = areaDeEspera;
+	}
+	
 	public ArrayList<LavaJato> getMeusLavaJatos() {
 		return meusLavaJatos;
 	}
@@ -90,6 +99,8 @@ public class Posto {
 	public Posto(int quantidadeDeLavaJatos, double tempoDeOperacao) {
 		this.setQuantidadeDeLavaJatos(quantidadeDeLavaJatos);
 		this.setTempoDeOperacao(tempoDeOperacao);
+		
+		 
 		
 		this.criaLavaJatos();
 		

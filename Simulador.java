@@ -67,12 +67,7 @@ public class Simulador {
 			}
 			
 			if (myPosto.getAreaDeEspera().isFilaVazia() == false) {
-				myPosto.getAreaDeEspera().
-					removeDaFila(myPosto.
-							getAreaDeEspera().
-								getMyList().
-									get(0));
-				
+				myPosto.getAreaDeEspera().removeDaFila(myPosto.getAreaDeEspera().getMyList().get(0));
 				myPosto.getMeusLavaJatos().
 					get(myPosto.getQuantidadeDeLavaJatos()-1).
 						setEmUso(true);
