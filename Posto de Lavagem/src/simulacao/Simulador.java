@@ -1,6 +1,5 @@
 package simulacao;
 
-import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -58,29 +57,146 @@ public class Simulador {
 		
 		for (int tempo = 1; tempo <= myPosto.getTempoDeOperacao(); tempo++) {
 			
+			//A cada tempo de chegada adiciona carro na fila
 			if (tempo%taxaDeChegada == 0) {
-				if (((tempo/taxaDeChegada)-1) <= 39)
+				if (((tempo/taxaDeChegada)-1) <= 39) {
+					//adiciona carro na fila
+					
+					//Se o carro que chegou, encontrar a fila cheia
+					if (myPosto.getAreaDeEspera().getMyList().size()  ==
+							myPosto.getAreaDeEspera().getMaxTamFila()) {
+						
+						//Adiciona carro não lavado
+						myPosto.setCarrosNaoLavados(myPosto.getCarrosNaoLavados()+1);
+						
+					}
+					
 					myPosto.getAreaDeEspera().
 						adicionaNaFila(carrosDia.get((tempo/taxaDeChegada)-1));
-				else
-					System.out.println("Full");
-			}
+					
+					//adiciona tempo de espera do carro
+					myPosto.getAreaDeEspera().getTempoFila().add(new Integer(0));
+					
+					//adiciona um carro não lavado
+					myPosto.setCarrosNaoLavados(myPosto.getCarrosNaoLavados()+1);
+				
+					
+					//Next Op
+				
+				
+				}
+					else
+					System.out.println("Maximum number of cars reached.");
+				
+			}//fecha if
 			
-			if (myPosto.getAreaDeEspera().isFilaVazia() == false) {
+			
+			//incrementa o tempo dos carros na fila
+			for (int i = 0; i < myPosto.getAreaDeEspera().getMyList().size(); i++ ) {
+				myPosto.getAreaDeEspera().
+					getTempoFila().set(i,myPosto.getAreaDeEspera().
+							getTempoFila().get(i) + 1); 
+			}//fecha if incremento
+			
+			
+			//Fila não vazia - Remover carro da fila e Define o lava jato em uso
+			if (!myPosto.getAreaDeEspera().isFilaVazia() &&
+						!myPosto.getMeusLavaJatos().get(myPosto.
+								getQuantidadeDeLavaJatos()-1).isEmUso() ) {
+				
+				//define em quanto tempo o carro será lavado
+				myPosto.getMeusLavaJatos().
+					get(myPosto.getQuantidadeDeLavaJatos()-1).
+						getEstadoDosCarro().add(new String(myPosto.
+								getAreaDeEspera().getMyList().
+									get(0).getEstadoDeSujeira()));
+				
+				//remove carro da fila
 				myPosto.getAreaDeEspera().
 					removeDaFila(myPosto.
 							getAreaDeEspera().
 								getMyList().
 									get(0));
 				
-				myPosto.getMeusLavaJatos().
-					get(myPosto.getQuantidadeDeLavaJatos()-1).
-						setEmUso(true);
+				myPosto.getMeusLavaJatos().get(myPosto.
+						getQuantidadeDeLavaJatos()-1).setEmUso(true);
+				
+				
+				
+				myPosto.setCarrosNaoLavados(myPosto.getCarrosNaoLavados() - 1);
+				
+				myPosto.setCarrosLavados(myPosto.getCarrosLavados() + 1);
+				
+			}//fecha if 
+			
+			//Define lava-jato ligado ou desligado
+			
+			
+			
+			
+			if (myPosto.getMeusLavaJatos().get(myPosto.
+					getQuantidadeDeLavaJatos()-1).isEmUso()) {
+				
+				if (myPosto.getMeusLavaJatos().
+						get(myPosto.getQuantidadeDeLavaJatos()-1).
+							getEstadoDosCarro().get(0).equals("Bem Sujo")) {
+					
+					if (tempo%myPosto.getMeusLavaJatos().
+							get(myPosto.getQuantidadeDeLavaJatos()-1).
+								getTempoBemSujo() == 0) {
+						
+						myPosto.getMeusLavaJatos().
+							get(myPosto.getQuantidadeDeLavaJatos()-1).
+								setEmUso(false);
+						
+						myPosto.getMeusLavaJatos().
+							get(myPosto.getQuantidadeDeLavaJatos()-1).
+								getEstadoDosCarro().remove(0);
+						
+					}
+					
+				} else if (myPosto.getMeusLavaJatos().
+						get(myPosto.getQuantidadeDeLavaJatos()-1).
+							getEstadoDosCarro().get(0).equals("Sujo")) {
+					
+					if (tempo%myPosto.getMeusLavaJatos().
+							get(myPosto.getQuantidadeDeLavaJatos()-1).
+								getTempoSujo() == 0) {
+						
+						myPosto.getMeusLavaJatos().
+							get(myPosto.getQuantidadeDeLavaJatos()-1).
+								setEmUso(false);
+						
+						myPosto.getMeusLavaJatos().
+							get(myPosto.getQuantidadeDeLavaJatos()-1).
+								getEstadoDosCarro().remove(0);
+						
+					}
+					
+					
+				} else {
+					
+					if (tempo%myPosto.getMeusLavaJatos().
+							get(myPosto.getQuantidadeDeLavaJatos()-1).
+								getTempoQuaseLimpo() == 0) {
+						
+						myPosto.getMeusLavaJatos().
+							get(myPosto.getQuantidadeDeLavaJatos()-1).
+								setEmUso(false);
+						
+						myPosto.getMeusLavaJatos().
+							get(myPosto.getQuantidadeDeLavaJatos()-1).
+								getEstadoDosCarro().remove(0);
+						
+					}
+				}
+				
 			}
 			
 			
 			
-		}
+			
+		}//fecha for
 		
 		
 		
@@ -89,6 +205,10 @@ public class Simulador {
 		
 		
 
+	}
+	
+	public static void log (String message) {
+		System.out.println(message);
 	}
 
 }

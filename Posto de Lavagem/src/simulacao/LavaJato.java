@@ -1,5 +1,7 @@
 package simulacao;
 
+import java.util.ArrayList;
+
 /**
  * Classe que modela um lava-jato com 3 níves de operação.
  * Os 3 níveis são: Quase Limpo, Sujo e Bem Sujo.
@@ -13,8 +15,18 @@ public class LavaJato {
 	private double tempoBemSujo;
 	private boolean emUso;
 	
+	private ArrayList<String> estadoDosCarro = new ArrayList<String>(); 
+	
 	public double getTempoQuaseLimpo() {
 		return tempoQuaseLimpo;
+	}	
+	
+	public ArrayList<String> getEstadoDosCarro() {
+		return estadoDosCarro;
+	}
+
+	public void setEstadoDosCarro(ArrayList<String> estadoDosCarro) {
+		this.estadoDosCarro = estadoDosCarro;
 	}
 
 	public void setTempoQuaseLimpo(double tempoQuaseLimpo) {

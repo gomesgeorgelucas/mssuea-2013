@@ -12,14 +12,20 @@ import java.util.ArrayList;
 public class Fila {
 	
 	private boolean filaVazia;
-	private int tempoNaFila;
+	private ArrayList<Integer> tempoFila = new ArrayList<Integer>();
 	private int tamFila;
 	private int maxTamFila;
 	
 	private ArrayList<Carro> myList = new ArrayList<Carro>();
 
-	
-	
+	public ArrayList<Integer> getTempoFila() {
+		return tempoFila;
+	}
+
+	public void setTempoFila(ArrayList<Integer> tempoFila) {
+		this.tempoFila = tempoFila;
+	}
+
 	public int getTamFila() {
 		return tamFila;
 	}
@@ -50,14 +56,6 @@ public class Fila {
 
 	public void setMyList(ArrayList<Carro> myList) {
 		this.myList = myList;
-	}
-	
-	public int getTempoNaFila() {
-		return tempoNaFila;
-	}
-
-	public void setTempoNaFila(int tempoNaFila) {
-		this.tempoNaFila = tempoNaFila;
 	}
 	
 	public void adicionaNaFila(Carro carro) {

@@ -26,7 +26,6 @@ public class Posto {
 		return areaDeEspera;
 	}
 
-
 	public void setAreaDeEspera(Fila areaDeEspera) {
 		this.areaDeEspera = areaDeEspera;
 	}
@@ -89,7 +88,6 @@ public class Posto {
 			 this.getMeusLavaJatos().add(new LavaJato());
 		}
 	}
-
 	
 	/**
 	 * Construtor da classe Posto
