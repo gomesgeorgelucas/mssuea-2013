@@ -31,9 +31,10 @@ public class Fila {
 		this.myList = myList;
 	}
 	
-	public void adicionaNaFila(Carro carro) {
+	public void adicionaNaFila( Carro carro, float tempoInicial ) {
 		System.out.println("Carro adicionado na fila");
 		if (this.getMyList().size() < this.getMaxTamFila()){
+			carro.setTempoInicialFila( tempoInicial );
 			this.getMyList().add(carro);
 		}
 	}

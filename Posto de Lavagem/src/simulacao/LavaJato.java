@@ -15,7 +15,7 @@ public class LavaJato {
 	private int tempoBemSujo;
 	private boolean emUso;
 	private int tempoFinalLavagem;
-	 
+	
 	private ArrayList<String> estadoDosCarro = new ArrayList<String>(); 
 	
 	public int getTempoQuaseLimpo() {

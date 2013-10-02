@@ -26,10 +26,13 @@ public class Simulador {
 	}
 	 
 	public static void main(String[] args) throws IOException {
-		int tempoChegadas = 0;
-		int tempoAtendimento = 0;
+		float tempoChegadas = 0;
+		float tempoAtendimento = 0;
 		float qtdCarrosAtendidos = 0;
 		float qtdCarrosPerdidos = 0;
+		float qtdTotalCarros = 0;
+		float tempoEspera = 0;
+		
 		FileWriter fw = new FileWriter("resultados.txt", true);
 		BufferedWriter out = new BufferedWriter( fw );
 		DecimalFormat df = new DecimalFormat();
@@ -51,15 +54,17 @@ public class Simulador {
 	 		 *	Será que a produtividade do operador é adequada?
 			 */	
 			//Quantidade de carros que foram embora por não ter mais vaga na área de espera
-			int carrosPerdidos = 0;
+			float carrosPerdidos = 0;
 			//Quantidade de carros lavados
-			int carrosLavados = 0;
+			float carrosLavados = 0;
+			//Quantidade de carros que chegaram
+			float qtdCarros = 0;
 			//Define area de espera para 4 carros
 			myPosto.setMaxTamFila(4);
 			
 			//Cada máquina tem um tempo de lavagem diferente?
-			myPosto.getMeusLavaJatos().get(0).setTempoSujo(10);
-			myPosto.getMeusLavaJatos().get(0).setTempoQuaseLimpo(10);
+			myPosto.getMeusLavaJatos().get(0).setTempoSujo(15);
+			myPosto.getMeusLavaJatos().get(0).setTempoQuaseLimpo(25);
 			myPosto.getMeusLavaJatos().get(0).setTempoBemSujo(10);
 		
 			while( myPosto.getTempoDeOperacao() > 0 ) {
@@ -68,6 +73,9 @@ public class Simulador {
 				boolean isLavando = false;
 				//tempo de chegada entre 5 e 15 unidades de tempo
 				int tempoChegada = 5 + rand.nextInt( 11 );
+				tempoChegadas += tempoChegada;
+				qtdCarros++;
+				qtdTotalCarros++;
 				//Passa o tempo na simulação
 				myPosto.diminuirTempo( tempoChegada );
 				
@@ -81,20 +89,16 @@ public class Simulador {
 					//Se não estiver em uso, verifica se existe algum carro na fila. Se não existir, começa o processo para o carro que chegou.
 					if( !lj.isEmUso() ) {
 						if( myPosto.getAreaDeEspera().isEmpty() ) {
-							myPosto.lavar( carro, lj );
+							tempoAtendimento += myPosto.lavar( carro, lj );
 							isLavando = true;
 						}else{
-							myPosto.lavar( myPosto.getAreaDeEspera().pegaPrimeiroDaFila(), lj );
+							tempoAtendimento += myPosto.lavar( myPosto.getAreaDeEspera().pegaPrimeiroDaFila(), lj );
+							tempoEspera += myPosto.getTempoEspera( myPosto.getAreaDeEspera().pegaPrimeiroDaFila() );
 							myPosto.getAreaDeEspera().removeDaFila( myPosto.getAreaDeEspera().pegaPrimeiroDaFila() );
 							isLavando = false;
 						}
 						carrosLavados++;
 					}
-				}
-				
-				//Se não conseguiu ir direto para o lava jato, verifica se tem vaga disponível na area de espera.
-				if ( !isLavando && myPosto.getAreaDeEspera().temVaga() ) {
-					myPosto.getAreaDeEspera().adicionaNaFila( carro );
 				}
 				
 				//Não conseguiu vaga na área de espera
@@ -103,18 +107,32 @@ public class Simulador {
 					carrosPerdidos++;
 				}
 				
+				//Se não conseguiu ir direto para o lava jato, verifica se tem vaga disponível na area de espera.
+				if ( !isLavando && myPosto.getAreaDeEspera().temVaga() ) {
+					myPosto.getAreaDeEspera().adicionaNaFila( carro, myPosto.getTempoDeOperacao() );
+				}
+				
+				
 			}
+			//incrementa atributos que são usados na média
 			qtdCarrosAtendidos += carrosLavados;
 			qtdCarrosPerdidos += carrosPerdidos;
+			
 			//escreve em um arquivo os resultados obtidos
 			out.write( "Simulacao " + (i + 1) + ":\n" );
 			out.write( "A quantidade de carros lavados foi de: " + carrosLavados + "\n" );
 			out.write( "A quantidade de carros perdidos foi de: " + carrosPerdidos + "\n" );
+			out.write( "A quantidade de carros que ficaram na fila foi de: " + myPosto.getAreaDeEspera().getMyList().size() + "\n" );
+			out.write( "A quantidade de carros que chegaram foi: " + qtdCarros + "\n" );
 			out.write( "------------------------------------------------------------------\n" );
 	
 		}
+		//Escreve ao final do arquivo, a média das 30 simulações 
 		out.write( "A media de carros atendidos e de: " + df.format( qtdCarrosAtendidos/30 ) + "\n" );
 		out.write( "A media de carros perdidos e de: " + df.format( qtdCarrosPerdidos/30 ) + "\n" );
+		out.write( "Tempo medio de atendimento: " + df.format( tempoAtendimento/qtdCarrosAtendidos ) + "\n" );
+		out.write( "Tempo medio de chegadas: " + df.format( tempoChegadas/qtdTotalCarros ) + "\n" );
+		out.write( "Tempo medio de espera: " + df.format( tempoEspera/qtdCarrosAtendidos ) + "\n" );
 		out.close();
 	}
 }

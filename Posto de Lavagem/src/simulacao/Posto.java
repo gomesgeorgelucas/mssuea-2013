@@ -92,17 +92,24 @@ public class Posto {
 	}
 	
 	//Método utilizado pra lavar um carro
-	public void lavar( Carro carro, LavaJato lj ) {
+	public float lavar( Carro carro, LavaJato lj ) {
 		lj.setEmUso( true );
 		System.out.println( "Lavando Carro" );
 		if( carro.getEstadoDeSujeira().equals( "QuaseLimpo" ) ) {
 			lj.setTempoFinalLavagem( this.tempoDeOperacao - lj.getTempoQuaseLimpo() );
+			return lj.getTempoQuaseLimpo();
 		} else if( carro.getEstadoDeSujeira().equals( "Sujo" ) ) {
 			lj.setTempoFinalLavagem( this.tempoDeOperacao - lj.getTempoSujo() );
+			return lj.getTempoSujo();
 		}else {
 			lj.setTempoFinalLavagem( this.tempoDeOperacao - lj.getTempoBemSujo() );
+			return lj.getTempoBemSujo();
 		}
 		
+	}
+	
+	public float getTempoEspera( Carro carro ) {
+		return carro.getTempoInicialFila() - this.tempoDeOperacao;
 	}
 	
 	//"Passa" o tempo na simulação

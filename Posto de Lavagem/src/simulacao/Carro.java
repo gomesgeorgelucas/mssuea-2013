@@ -8,6 +8,7 @@ package simulacao;
  */
 public class Carro {
 	private String estadoDeSujeira;
+	private float tempoInicialFila;
 
 	public String getEstadoDeSujeira() {
 		return estadoDeSujeira;
@@ -17,6 +18,14 @@ public class Carro {
 		this.estadoDeSujeira = estadoDeSujeira;
 	}
 	
+	public float getTempoInicialFila() {
+		return tempoInicialFila;
+	}
+
+	public void setTempoInicialFila(float tempoEspera) {
+		this.tempoInicialFila = tempoEspera;
+	}
+
 	/**
 	 * Construtor da classe Carro.
 	 * @param estadoDeSujeira
