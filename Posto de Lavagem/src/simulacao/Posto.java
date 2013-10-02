@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 
 public class Posto {
-	
+	 
 	private int tempoDeOperacao;
 	private int quantidadeDeLavaJatos;
 	

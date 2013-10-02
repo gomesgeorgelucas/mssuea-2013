@@ -24,7 +24,7 @@ public class Simulador {
 		else			
 			return "BemSujo";
 	}
-	
+	 
 	public static void main(String[] args) throws IOException {
 		int tempoChegadas = 0;
 		int tempoAtendimento = 0;

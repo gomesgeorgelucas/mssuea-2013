@@ -12,7 +12,7 @@ public class Carro {
 	public String getEstadoDeSujeira() {
 		return estadoDeSujeira;
 	}
-
+ 
 	public void setEstadoDeSujeira(String estadoDeSujeira) {
 		this.estadoDeSujeira = estadoDeSujeira;
 	}
