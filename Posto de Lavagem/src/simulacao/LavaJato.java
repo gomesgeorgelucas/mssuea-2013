@@ -10,14 +10,15 @@ import java.util.ArrayList;
  *
  */
 public class LavaJato {
-	private double tempoQuaseLimpo;
-	private double tempoSujo;
-	private double tempoBemSujo;
+	private int tempoQuaseLimpo;
+	private int tempoSujo;
+	private int tempoBemSujo;
 	private boolean emUso;
+	private int tempoFinalLavagem;
 	
 	private ArrayList<String> estadoDosCarro = new ArrayList<String>(); 
 	
-	public double getTempoQuaseLimpo() {
+	public int getTempoQuaseLimpo() {
 		return tempoQuaseLimpo;
 	}	
 	
@@ -29,23 +30,23 @@ public class LavaJato {
 		this.estadoDosCarro = estadoDosCarro;
 	}
 
-	public void setTempoQuaseLimpo(double tempoQuaseLimpo) {
+	public void setTempoQuaseLimpo(int tempoQuaseLimpo) {
 		this.tempoQuaseLimpo = tempoQuaseLimpo;
 	}
 
-	public double getTempoSujo() {
+	public int getTempoSujo() {
 		return tempoSujo;
 	}
 
-	public void setTempoSujo(double tempoSujo) {
+	public void setTempoSujo(int tempoSujo) {
 		this.tempoSujo = tempoSujo;
 	}
 
-	public double getTempoBemSujo() {
+	public int getTempoBemSujo() {
 		return tempoBemSujo;
 	}
 
-	public void setTempoBemSujo(double tempoBemSujo) {
+	public void setTempoBemSujo(int tempoBemSujo) {
 		this.tempoBemSujo = tempoBemSujo;
 	}	
 	
@@ -56,6 +57,14 @@ public class LavaJato {
 	public void setEmUso(boolean emUso) {
 		this.emUso = emUso;
 	}
+	
+	public int getTempoFinalLavagem() {
+		return tempoFinalLavagem;
+	}
+
+	public void setTempoFinalLavagem(int tempoFinalLavagem) {
+		this.tempoFinalLavagem = tempoFinalLavagem;
+	}
 
 	/**
 	 * Construtor da classe LavaJato
@@ -63,7 +72,7 @@ public class LavaJato {
 	 * @param tempoSujo
 	 * @param tempoBemSujo
 	 */
-	public LavaJato(double tempoQuaseLimpo, double tempoSujo, double tempoBemSujo) {
+	public LavaJato(int tempoQuaseLimpo, int tempoSujo, int tempoBemSujo) {
 		this.setTempoBemSujo(tempoBemSujo);
 		this.setTempoQuaseLimpo(tempoQuaseLimpo);
 		this.setTempoSujo(tempoSujo);

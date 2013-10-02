@@ -14,12 +14,10 @@ import java.util.ArrayList;
 
 public class Posto {
 	
-	private double tempoDeOperacao;
+	private int tempoDeOperacao;
 	private int quantidadeDeLavaJatos;
-	private int carrosLavados;
-	private int carrosNaoLavados;
 	
-	private Fila areaDeEspera = new Fila(true);
+	private Fila areaDeEspera = new Fila();
 	private ArrayList<LavaJato> meusLavaJatos = new ArrayList<LavaJato>();
 
 	public Fila getAreaDeEspera() {
@@ -40,12 +38,12 @@ public class Posto {
 	}
 
 
-	public double getTempoDeOperacao() {
+	public int getTempoDeOperacao() {
 		return tempoDeOperacao;
 	}
 
 
-	public void setTempoDeOperacao(double tempoDeOperacao) {
+	public void setTempoDeOperacao(int tempoDeOperacao) {
 		this.tempoDeOperacao = tempoDeOperacao;
 	}
 
@@ -60,23 +58,12 @@ public class Posto {
 	}
 
 
-	public int getCarrosLavados() {
-		return carrosLavados;
+	public boolean isAreaEsperaVazia() { 
+		return this.getAreaDeEspera().isEmpty();
 	}
-
-
-	public void setCarrosLavados(int carrosLavados) {
-		this.carrosLavados = carrosLavados;
-	}
-
-
-	public int getCarrosNaoLavados() {
-		return carrosNaoLavados;
-	}
-
-
-	public void setCarrosNaoLavados(int carrosNaoLavados) {
-		this.carrosNaoLavados = carrosNaoLavados;
+	
+	public void setMaxTamFila(int maxTamFila) {
+		this.getAreaDeEspera().setMaxTamFila( maxTamFila );
 	}
 	
 	/**
@@ -84,7 +71,7 @@ public class Posto {
 	 */
 	public void criaLavaJatos() {
 		
-		for (int i=0; i <= this.getQuantidadeDeLavaJatos(); i++) {
+		for (int i=0; i < this.getQuantidadeDeLavaJatos(); i++) {
 			 this.getMeusLavaJatos().add(new LavaJato());
 		}
 	}
@@ -94,7 +81,7 @@ public class Posto {
 	 * @param quantidadeDeLavaJatos
 	 * @param tempoDeOperacao
 	 */
-	public Posto(int quantidadeDeLavaJatos, double tempoDeOperacao) {
+	public Posto( int quantidadeDeLavaJatos, int tempoDeOperacao ) {
 		this.setQuantidadeDeLavaJatos(quantidadeDeLavaJatos);
 		this.setTempoDeOperacao(tempoDeOperacao);
 		
@@ -104,5 +91,22 @@ public class Posto {
 		
 	}
 	
+	//Método utilizado pra lavar um carro
+	public void lavar( Carro carro, LavaJato lj ) {
+		lj.setEmUso( true );
+		System.out.println( "Lavando Carro" );
+		if( carro.getEstadoDeSujeira().equals( "QuaseLimpo" ) ) {
+			lj.setTempoFinalLavagem( this.tempoDeOperacao - lj.getTempoQuaseLimpo() );
+		} else if( carro.getEstadoDeSujeira().equals( "Sujo" ) ) {
+			lj.setTempoFinalLavagem( this.tempoDeOperacao - lj.getTempoSujo() );
+		}else {
+			lj.setTempoFinalLavagem( this.tempoDeOperacao - lj.getTempoBemSujo() );
+		}
+		
+	}
 	
+	//"Passa" o tempo na simulação
+	public void diminuirTempo( int tempo ) {
+		this.tempoDeOperacao -= tempo;
+	}
 }

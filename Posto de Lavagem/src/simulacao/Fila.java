@@ -11,28 +11,9 @@ import java.util.ArrayList;
  */
 public class Fila {
 	
-	private boolean filaVazia;
-	private ArrayList<Integer> tempoFila = new ArrayList<Integer>();
-	private int tamFila;
 	private int maxTamFila;
 	
 	private ArrayList<Carro> myList = new ArrayList<Carro>();
-
-	public ArrayList<Integer> getTempoFila() {
-		return tempoFila;
-	}
-
-	public void setTempoFila(ArrayList<Integer> tempoFila) {
-		this.tempoFila = tempoFila;
-	}
-
-	public int getTamFila() {
-		return tamFila;
-	}
-
-	public void setTamFila(int tamFila) {
-		this.tamFila = tamFila;
-	}
 
 	public int getMaxTamFila() {
 		return maxTamFila;
@@ -40,14 +21,6 @@ public class Fila {
 
 	public void setMaxTamFila(int maxTamFila) {
 		this.maxTamFila = maxTamFila;
-	}
-
-	public boolean isFilaVazia() {
-		return filaVazia;
-	}
-
-	public void setFilaVazia(boolean filaVazia) {
-		this.filaVazia = filaVazia;
 	}
 
 	public ArrayList<Carro> getMyList() {
@@ -59,26 +32,33 @@ public class Fila {
 	}
 	
 	public void adicionaNaFila(Carro carro) {
-		this.getMyList().add(carro);
-		if (this.getMyList().size() < this.getMaxTamFila())
-			this.setTamFila(this.getTamFila()+1);
-		
+		System.out.println("Carro adicionado na fila");
+		if (this.getMyList().size() < this.getMaxTamFila()){
+			this.getMyList().add(carro);
+		}
 	}
 	
-	public void removeDaFila(Carro carro) {
-		if (this.getMyList().contains(carro) &&
-				this.getMyList().get(this.getMyList().indexOf(carro)).hashCode() == carro.hashCode()) {
-			this.getMyList().remove(this.getMyList().indexOf(carro));			
-		}
-			
+	public void removeDaFila( Carro carro ) {
+		if (this.getMyList().contains( carro ) ) 
+			this.getMyList().remove( carro );			
+	}
+	
+	public boolean isEmpty() {
+		return this.getMyList().isEmpty();
+	}
+	
+	public boolean temVaga() {
+		return this.getMyList().size() < this.maxTamFila;
+	}
+	
+	public Carro pegaPrimeiroDaFila() {
+		return this.myList.get( 0 );
 	}
 
-	public Fila(boolean filaVazia) {
-		this.setFilaVazia(filaVazia);
+	public Fila() {
 	}
 	
-	public Fila(boolean filaVazia, int maxTam) {
-		this.setFilaVazia(filaVazia);
+	public Fila( int maxTam ) {
 		this.setMaxTamFila(maxTam);
 	}
 	

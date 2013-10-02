@@ -1,6 +1,9 @@
 package simulacao;
 
-import java.util.ArrayList;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Random;
 
 /**
@@ -22,193 +25,97 @@ public class Simulador {
 			return "BemSujo";
 	}
 	
-	public static void main(String[] args) {
-		
-		//Cria um posto com 1 lava jato e que trabalha
-		//1440 minutos por dia
-		Posto myPosto = new Posto(1, 1440);
-		
-		ArrayList<Carro> carrosDia = new ArrayList<Carro>();
-		
-		//Começar casos
-		
-		/**
-		 * Caso 1:
-		 *  Será que a área de espera disponível (para no máximo quatro
-		 *	automóveis) é suficiente?
- 		 *	Será que o tempo de serviço é aceitável?
- 		 *	Será que a produtividade do operador é adequada?
-		 */	
-		
-		//Define area de espera para 4 carros
-		int quantidadeDeCarros = 40;
-		int taxaDeChegada = 10;
-		myPosto.getAreaDeEspera().setMaxTamFila(4);
-		myPosto.getMeusLavaJatos().get(0).setTempoSujo(15);
-		myPosto.getMeusLavaJatos().get(0).setTempoQuaseLimpo(10);
-		myPosto.getMeusLavaJatos().get(0).setTempoBemSujo(25);
-		
-		
-		//Gera carros com níves de sujeira variados
-		for (int carro = 1; carro <= quantidadeDeCarros; carro++) {
-			carrosDia.add(new Carro(geraEstadoDeSujeira()));
-			//System.out.println(carrosDia.get(carro - 1).getEstadoDeSujeira());
-		}
-		
-		for (int tempo = 1; tempo <= myPosto.getTempoDeOperacao(); tempo++) {
+	public static void main(String[] args) throws IOException {
+		int tempoChegadas = 0;
+		int tempoAtendimento = 0;
+		float qtdCarrosAtendidos = 0;
+		float qtdCarrosPerdidos = 0;
+		FileWriter fw = new FileWriter("resultados.txt", true);
+		BufferedWriter out = new BufferedWriter( fw );
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(2);
+	
+		for( int i = 0; i < 30; i++ ) {
+			//Cria um posto com 1 lava jato e que trabalha
+			//600 minutos por dia(10 horas)
+			Posto myPosto = new Posto( 1, 600 );
+			Random rand = new Random();
 			
-			//A cada tempo de chegada adiciona carro na fila
-			if (tempo%taxaDeChegada == 0) {
-				if (((tempo/taxaDeChegada)-1) <= 39) {
-					//adiciona carro na fila
-					
-					//Se o carro que chegou, encontrar a fila cheia
-					if (myPosto.getAreaDeEspera().getMyList().size()  ==
-							myPosto.getAreaDeEspera().getMaxTamFila()) {
-						
-						//Adiciona carro não lavado
-						myPosto.setCarrosNaoLavados(myPosto.getCarrosNaoLavados()+1);
-						
+			//Começar casos
+			
+			/**
+			 * Caso 1:
+			 *  Será que a área de espera disponível (para no máximo quatro
+			 *	automóveis) é suficiente?
+	 		 *	Será que o tempo de serviço é aceitável?
+	 		 *	Será que a produtividade do operador é adequada?
+			 */	
+			//Quantidade de carros que foram embora por não ter mais vaga na área de espera
+			int carrosPerdidos = 0;
+			//Quantidade de carros lavados
+			int carrosLavados = 0;
+			//Define area de espera para 4 carros
+			myPosto.setMaxTamFila(4);
+			
+			//Cada máquina tem um tempo de lavagem diferente?
+			myPosto.getMeusLavaJatos().get(0).setTempoSujo(10);
+			myPosto.getMeusLavaJatos().get(0).setTempoQuaseLimpo(10);
+			myPosto.getMeusLavaJatos().get(0).setTempoBemSujo(10);
+		
+			while( myPosto.getTempoDeOperacao() > 0 ) {
+				Carro carro = new Carro( geraEstadoDeSujeira() );
+				//Atributo que verifica se o carro que chegou conseguiu ir direto pra máquina ou vai para a fila
+				boolean isLavando = false;
+				//tempo de chegada entre 5 e 15 unidades de tempo
+				int tempoChegada = 5 + rand.nextInt( 11 );
+				//Passa o tempo na simulação
+				myPosto.diminuirTempo( tempoChegada );
+				
+				//Verifica se tem algum lava jato disponível no momento
+				for( LavaJato lj : myPosto.getMeusLavaJatos() ) {
+					//Verifica se o carro que estava usando o lava jato já foi lavado
+					if( lj.getTempoFinalLavagem() != 0 && myPosto.getTempoDeOperacao() <= lj.getTempoFinalLavagem() ) {
+						lj.setEmUso( false );
 					}
 					
-					myPosto.getAreaDeEspera().
-						adicionaNaFila(carrosDia.get((tempo/taxaDeChegada)-1));
-					
-					//adiciona tempo de espera do carro
-					myPosto.getAreaDeEspera().getTempoFila().add(new Integer(0));
-					
-					//adiciona um carro não lavado
-					myPosto.setCarrosNaoLavados(myPosto.getCarrosNaoLavados()+1);
-				
-					
-					//Next Op
-				
-				
+					//Se não estiver em uso, verifica se existe algum carro na fila. Se não existir, começa o processo para o carro que chegou.
+					if( !lj.isEmUso() ) {
+						if( myPosto.getAreaDeEspera().isEmpty() ) {
+							myPosto.lavar( carro, lj );
+							isLavando = true;
+						}else{
+							myPosto.lavar( myPosto.getAreaDeEspera().pegaPrimeiroDaFila(), lj );
+							myPosto.getAreaDeEspera().removeDaFila( myPosto.getAreaDeEspera().pegaPrimeiroDaFila() );
+							isLavando = false;
+						}
+						carrosLavados++;
+					}
 				}
-					else
-					System.out.println("Maximum number of cars reached.");
 				
-			}//fecha if
-			
-			
-			//incrementa o tempo dos carros na fila
-			for (int i = 0; i < myPosto.getAreaDeEspera().getMyList().size(); i++ ) {
-				myPosto.getAreaDeEspera().
-					getTempoFila().set(i,myPosto.getAreaDeEspera().
-							getTempoFila().get(i) + 1); 
-			}//fecha if incremento
-			
-			
-			//Fila não vazia - Remover carro da fila e Define o lava jato em uso
-			if (!myPosto.getAreaDeEspera().isFilaVazia() &&
-						!myPosto.getMeusLavaJatos().get(myPosto.
-								getQuantidadeDeLavaJatos()-1).isEmUso() ) {
+				//Se não conseguiu ir direto para o lava jato, verifica se tem vaga disponível na area de espera.
+				if ( !isLavando && myPosto.getAreaDeEspera().temVaga() ) {
+					myPosto.getAreaDeEspera().adicionaNaFila( carro );
+				}
 				
-				//define em quanto tempo o carro será lavado
-				myPosto.getMeusLavaJatos().
-					get(myPosto.getQuantidadeDeLavaJatos()-1).
-						getEstadoDosCarro().add(new String(myPosto.
-								getAreaDeEspera().getMyList().
-									get(0).getEstadoDeSujeira()));
-				
-				//remove carro da fila
-				myPosto.getAreaDeEspera().
-					removeDaFila(myPosto.
-							getAreaDeEspera().
-								getMyList().
-									get(0));
-				
-				myPosto.getMeusLavaJatos().get(myPosto.
-						getQuantidadeDeLavaJatos()-1).setEmUso(true);
-				
-				
-				
-				myPosto.setCarrosNaoLavados(myPosto.getCarrosNaoLavados() - 1);
-				
-				myPosto.setCarrosLavados(myPosto.getCarrosLavados() + 1);
-				
-			}//fecha if 
-			
-			//Define lava-jato ligado ou desligado
-			
-			
-			
-			
-			if (myPosto.getMeusLavaJatos().get(myPosto.
-					getQuantidadeDeLavaJatos()-1).isEmUso()) {
-				
-				if (myPosto.getMeusLavaJatos().
-						get(myPosto.getQuantidadeDeLavaJatos()-1).
-							getEstadoDosCarro().get(0).equals("Bem Sujo")) {
-					
-					if (tempo%myPosto.getMeusLavaJatos().
-							get(myPosto.getQuantidadeDeLavaJatos()-1).
-								getTempoBemSujo() == 0) {
-						
-						myPosto.getMeusLavaJatos().
-							get(myPosto.getQuantidadeDeLavaJatos()-1).
-								setEmUso(false);
-						
-						myPosto.getMeusLavaJatos().
-							get(myPosto.getQuantidadeDeLavaJatos()-1).
-								getEstadoDosCarro().remove(0);
-						
-					}
-					
-				} else if (myPosto.getMeusLavaJatos().
-						get(myPosto.getQuantidadeDeLavaJatos()-1).
-							getEstadoDosCarro().get(0).equals("Sujo")) {
-					
-					if (tempo%myPosto.getMeusLavaJatos().
-							get(myPosto.getQuantidadeDeLavaJatos()-1).
-								getTempoSujo() == 0) {
-						
-						myPosto.getMeusLavaJatos().
-							get(myPosto.getQuantidadeDeLavaJatos()-1).
-								setEmUso(false);
-						
-						myPosto.getMeusLavaJatos().
-							get(myPosto.getQuantidadeDeLavaJatos()-1).
-								getEstadoDosCarro().remove(0);
-						
-					}
-					
-					
-				} else {
-					
-					if (tempo%myPosto.getMeusLavaJatos().
-							get(myPosto.getQuantidadeDeLavaJatos()-1).
-								getTempoQuaseLimpo() == 0) {
-						
-						myPosto.getMeusLavaJatos().
-							get(myPosto.getQuantidadeDeLavaJatos()-1).
-								setEmUso(false);
-						
-						myPosto.getMeusLavaJatos().
-							get(myPosto.getQuantidadeDeLavaJatos()-1).
-								getEstadoDosCarro().remove(0);
-						
-					}
+				//Não conseguiu vaga na área de espera
+				if( !isLavando && !myPosto.getAreaDeEspera().temVaga() ) {
+					System.out.println( "Carro foi embora por não ter mais vagas!" );
+					carrosPerdidos++;
 				}
 				
 			}
-			
-			
-			
-			
-		}//fecha for
-		
-		
-		
-		
-		
-		
-		
-
-	}
+			qtdCarrosAtendidos += carrosLavados;
+			qtdCarrosPerdidos += carrosPerdidos;
+			//escreve em um arquivo os resultados obtidos
+			out.write( "Simulacao " + (i + 1) + ":\n" );
+			out.write( "A quantidade de carros lavados foi de: " + carrosLavados + "\n" );
+			out.write( "A quantidade de carros perdidos foi de: " + carrosPerdidos + "\n" );
+			out.write( "------------------------------------------------------------------\n" );
 	
-	public static void log (String message) {
-		System.out.println(message);
+		}
+		out.write( "A media de carros atendidos e de: " + df.format( qtdCarrosAtendidos/30 ) + "\n" );
+		out.write( "A media de carros perdidos e de: " + df.format( qtdCarrosPerdidos/30 ) + "\n" );
+		out.close();
 	}
-
 }
+
