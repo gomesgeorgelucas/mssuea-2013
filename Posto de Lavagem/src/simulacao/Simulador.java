@@ -1,9 +1,11 @@
 package simulacao;
 
+import java.awt.List;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -32,8 +34,33 @@ public class Simulador {
 		float qtdCarrosPerdidos = 0;
 		float qtdTotalCarros = 0;
 		float tempoEspera = 0;
+		ArrayList<Integer> horariosPicoInicio =  new ArrayList<Integer>();
+		ArrayList<Integer> horariosPicoFim =  new ArrayList<Integer>();
 		
-		FileWriter fw = new FileWriter("resultados.txt", true);
+		//CENARIO 3a
+		//Das 08:00 as 08:30
+		horariosPicoInicio.add(600);
+		horariosPicoFim.add(530);
+				
+		//Das 12:00 as 13:00
+		horariosPicoInicio.add(360);
+		horariosPicoFim.add(300);
+				
+		//Das 16:00 as 18:00
+		horariosPicoInicio.add(60);
+		horariosPicoFim.add(0);
+		
+//		//CENARIO 3b	
+//		//Das 10:00 as 14:00
+//		horariosPicoInicio.add(480);
+//		horariosPicoFim.add(240);
+//		
+//		//Das 16:00 as 18:00
+//		horariosPicoInicio.add(120);
+//		horariosPicoFim.add(0);
+		
+		
+		FileWriter fw = new FileWriter("resultados_cenario_3a_solucao2.txt", true);
 		BufferedWriter out = new BufferedWriter( fw );
 		DecimalFormat df = new DecimalFormat();
 		df.setMaximumFractionDigits(2);
@@ -41,7 +68,7 @@ public class Simulador {
 		for( int i = 0; i < 30; i++ ) {
 			//Cria um posto com 1 lava jato e que trabalha
 			//600 minutos por dia(10 horas)
-			Posto myPosto = new Posto( 1, 600 );
+			Posto myPosto = new Posto( 2, 600 );
 			Random rand = new Random();
 			
 			//Começar casos
@@ -63,16 +90,26 @@ public class Simulador {
 			myPosto.setMaxTamFila(4);
 			
 			//Cada máquina tem um tempo de lavagem diferente?
-			myPosto.getMeusLavaJatos().get(0).setTempoSujo(8 + rand.nextInt( 8 ));
-			myPosto.getMeusLavaJatos().get(0).setTempoQuaseLimpo(5 + rand.nextInt( 8 ));
-			myPosto.getMeusLavaJatos().get(0).setTempoBemSujo(5 + rand.nextInt( 8 ));
+			myPosto.getMeusLavaJatos().get(0).setTempoSujo(9);
+			myPosto.getMeusLavaJatos().get(0).setTempoQuaseLimpo(5);
+			myPosto.getMeusLavaJatos().get(0).setTempoBemSujo(13);
 		
 			while( myPosto.getTempoDeOperacao() > 0 ) {
 				Carro carro = new Carro( geraEstadoDeSujeira() );
+				int tempoChegada = 0;
 				//Atributo que verifica se o carro que chegou conseguiu ir direto pra máquina ou vai para a fila
 				boolean isLavando = false;
-				//tempo de chegada entre 5 e 15 unidades de tempo
-				int tempoChegada = 5 + rand.nextInt( 11 );
+				
+				for( int h=0; h<horariosPicoInicio.size(); h++ ) {
+					if( myPosto.getTempoDeOperacao() <= horariosPicoInicio.get(h) && myPosto.getTempoDeOperacao() >= horariosPicoFim.get(h)) {
+						//tempo de chegada entre 5 e 10 unidades de tempo
+						tempoChegada = 5 + rand.nextInt( 6 );
+						break;
+					} 
+					//tempo de chegada entre 10 e 15 unidades de tempo
+					tempoChegada = 10 + rand.nextInt( 6 );
+				}
+				
 				if ( ( myPosto.getTempoDeOperacao() - tempoChegada ) < 0 ) {
 					break;
 				}
@@ -101,6 +138,7 @@ public class Simulador {
 							isLavando = false;
 						}
 						carrosLavados++;
+						break;
 					}
 				}
 				
@@ -127,7 +165,6 @@ public class Simulador {
 			out.write( "A quantidade de carros perdidos foi de: " + carrosPerdidos + "\n" );
 			out.write( "A quantidade de carros que ficaram na fila foi de: " + myPosto.getAreaDeEspera().getMyList().size() + "\n" );
 			out.write( "A quantidade de carros que chegaram foi: " + qtdCarros + "\n" );
-			out.write( " " + tempoChegadas );
 			out.write( "------------------------------------------------------------------\n" );
 	
 		}
@@ -138,6 +175,7 @@ public class Simulador {
 		out.write( "Tempo medio de chegadas: " + df.format( tempoChegadas/qtdTotalCarros ) + "\n" );
 		out.write( "Tempo medio de espera: " + df.format( tempoEspera/qtdCarrosAtendidos ) + "\n" );
 		out.close();
+		
 	}
 }
 

@@ -1,0 +1,185 @@
+Simulacao 1:
+A quantidade de carros lavados foi de: 66.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 66.0
+------------------------------------------------------------------
+Simulacao 2:
+A quantidade de carros lavados foi de: 66.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 66.0
+------------------------------------------------------------------
+Simulacao 3:
+A quantidade de carros lavados foi de: 66.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 66.0
+------------------------------------------------------------------
+Simulacao 4:
+A quantidade de carros lavados foi de: 65.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 65.0
+------------------------------------------------------------------
+Simulacao 5:
+A quantidade de carros lavados foi de: 67.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 67.0
+------------------------------------------------------------------
+Simulacao 6:
+A quantidade de carros lavados foi de: 67.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 67.0
+------------------------------------------------------------------
+Simulacao 7:
+A quantidade de carros lavados foi de: 67.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 67.0
+------------------------------------------------------------------
+Simulacao 8:
+A quantidade de carros lavados foi de: 65.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 65.0
+------------------------------------------------------------------
+Simulacao 9:
+A quantidade de carros lavados foi de: 67.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 67.0
+------------------------------------------------------------------
+Simulacao 10:
+A quantidade de carros lavados foi de: 66.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 66.0
+------------------------------------------------------------------
+Simulacao 11:
+A quantidade de carros lavados foi de: 66.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 66.0
+------------------------------------------------------------------
+Simulacao 12:
+A quantidade de carros lavados foi de: 64.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 64.0
+------------------------------------------------------------------
+Simulacao 13:
+A quantidade de carros lavados foi de: 71.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 71.0
+------------------------------------------------------------------
+Simulacao 14:
+A quantidade de carros lavados foi de: 66.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 66.0
+------------------------------------------------------------------
+Simulacao 15:
+A quantidade de carros lavados foi de: 68.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 68.0
+------------------------------------------------------------------
+Simulacao 16:
+A quantidade de carros lavados foi de: 70.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 70.0
+------------------------------------------------------------------
+Simulacao 17:
+A quantidade de carros lavados foi de: 65.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 65.0
+------------------------------------------------------------------
+Simulacao 18:
+A quantidade de carros lavados foi de: 64.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 64.0
+------------------------------------------------------------------
+Simulacao 19:
+A quantidade de carros lavados foi de: 67.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 67.0
+------------------------------------------------------------------
+Simulacao 20:
+A quantidade de carros lavados foi de: 67.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 67.0
+------------------------------------------------------------------
+Simulacao 21:
+A quantidade de carros lavados foi de: 65.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 65.0
+------------------------------------------------------------------
+Simulacao 22:
+A quantidade de carros lavados foi de: 63.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 63.0
+------------------------------------------------------------------
+Simulacao 23:
+A quantidade de carros lavados foi de: 65.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 65.0
+------------------------------------------------------------------
+Simulacao 24:
+A quantidade de carros lavados foi de: 65.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 65.0
+------------------------------------------------------------------
+Simulacao 25:
+A quantidade de carros lavados foi de: 64.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 64.0
+------------------------------------------------------------------
+Simulacao 26:
+A quantidade de carros lavados foi de: 65.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 65.0
+------------------------------------------------------------------
+Simulacao 27:
+A quantidade de carros lavados foi de: 67.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 67.0
+------------------------------------------------------------------
+Simulacao 28:
+A quantidade de carros lavados foi de: 63.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 63.0
+------------------------------------------------------------------
+Simulacao 29:
+A quantidade de carros lavados foi de: 66.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 66.0
+------------------------------------------------------------------
+Simulacao 30:
+A quantidade de carros lavados foi de: 67.0
+A quantidade de carros perdidos foi de: 0.0
+A quantidade de carros que ficaram na fila foi de: 0
+A quantidade de carros que chegaram foi: 67.0
+------------------------------------------------------------------
+A media de carros atendidos e de: 66
+A media de carros perdidos e de: 0
+Tempo medio de atendimento: 6,26
+Tempo medio de chegadas: 9,03
+Tempo medio de espera: 0
