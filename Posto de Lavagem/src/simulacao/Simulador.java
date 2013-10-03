@@ -63,9 +63,9 @@ public class Simulador {
 			myPosto.setMaxTamFila(4);
 			
 			//Cada máquina tem um tempo de lavagem diferente?
-			myPosto.getMeusLavaJatos().get(0).setTempoSujo(15);
-			myPosto.getMeusLavaJatos().get(0).setTempoQuaseLimpo(25);
-			myPosto.getMeusLavaJatos().get(0).setTempoBemSujo(10);
+			myPosto.getMeusLavaJatos().get(0).setTempoSujo(8 + rand.nextInt( 8 ));
+			myPosto.getMeusLavaJatos().get(0).setTempoQuaseLimpo(5 + rand.nextInt( 8 ));
+			myPosto.getMeusLavaJatos().get(0).setTempoBemSujo(5 + rand.nextInt( 8 ));
 		
 			while( myPosto.getTempoDeOperacao() > 0 ) {
 				Carro carro = new Carro( geraEstadoDeSujeira() );
@@ -73,6 +73,9 @@ public class Simulador {
 				boolean isLavando = false;
 				//tempo de chegada entre 5 e 15 unidades de tempo
 				int tempoChegada = 5 + rand.nextInt( 11 );
+				if ( ( myPosto.getTempoDeOperacao() - tempoChegada ) < 0 ) {
+					break;
+				}
 				tempoChegadas += tempoChegada;
 				qtdCarros++;
 				qtdTotalCarros++;
@@ -124,6 +127,7 @@ public class Simulador {
 			out.write( "A quantidade de carros perdidos foi de: " + carrosPerdidos + "\n" );
 			out.write( "A quantidade de carros que ficaram na fila foi de: " + myPosto.getAreaDeEspera().getMyList().size() + "\n" );
 			out.write( "A quantidade de carros que chegaram foi: " + qtdCarros + "\n" );
+			out.write( " " + tempoChegadas );
 			out.write( "------------------------------------------------------------------\n" );
 	
 		}
